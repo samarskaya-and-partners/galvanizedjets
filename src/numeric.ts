@@ -1,3 +1,5 @@
+/* A variable containing the static HTML for the numeric tests, to be
+inserted into the DOM. */
 var numeric_html = `
         <h2><span>Old Style Numerals</span></h2>
         <ul class="numeric old">
