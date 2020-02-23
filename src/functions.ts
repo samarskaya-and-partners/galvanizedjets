@@ -66,7 +66,7 @@ var simple = function(evt) {
     $("#loader").show( () => {
       for (var l of alphabet) {
         for (var r of alphabet) {
-          var firstWord = wordlist.find ( (x) => x.match(RegExp(l+r)) )
+          var firstWord = wordlist.find ( (x) => x.includes(l+r) )
           if (!firstWord) continue;
           var li = $("<li></li>").append(firstWord);
           li.data("key", l+r);
