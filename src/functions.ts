@@ -54,10 +54,12 @@ var cycle = function () {
 var simple = function(evt) {
   var script = $("#charsets").data("script");
   var alphabet = alphabets[script];
-  var wordDiv = $("#words ul");
+  var wordDiv = $("#words");
 
   lazyLoadWordlist(script, (wordlist) => {
     wordDiv.empty();
+    var ul = $("<ul>");
+    wordDiv.append(ul);
     $("#loader").show( () => {
       for (var l of alphabet) {
         for (var r of alphabet) {
@@ -69,7 +71,7 @@ var simple = function(evt) {
             $("#key").text("<"+$(this).data("key")+">")
           });
           li.click(cycle);
-          wordDiv.append(li)
+          ul.append(li)
         }
       }
       $("#loader").hide();
@@ -94,18 +96,22 @@ var hobonop = function () {
   var script = $("#charsets").data("script");
   console.log("Setting up hobonop for ", script)
   var alphabet = alphabets[script+"_extended"] || alphabets[script];
-  var wordDiv = $("#words ul");
+  var wordDiv = $("#words");
   wordDiv.empty();
+
+  var ul = $("<ul>");
+  wordDiv.append(ul);
+
   setSingleLine();
 
-  wordDiv.append(formHobonop(script, alphabet, "spacing"));
+  ul.append(formHobonop(script, alphabet, "spacing"));
 }
 
 /* The numeric function is just static HTML. Since we don't want to mess
    about with HTML templates, the whole text is stored in a Javascript
    variable, which we just insert into the DOM. */
 var numeric = function () {
-  var wordDiv = $("#words ul");
+  var wordDiv = $("#words");
   wordDiv.empty();
   setSingleLine();
   wordDiv.append($(numeric_html));
