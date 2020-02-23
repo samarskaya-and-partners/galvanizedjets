@@ -100,8 +100,6 @@ reader.addEventListener("loadend", TCNDDF.buildFontListItem, false);
         fontPreviewFragment.appendChild(domElements[0]);
         dropListing.appendChild(fontPreviewFragment);
         TCNDDF.updateActiveFont(domElements[0]);
-// DERP
-        displayContainer.style.fontFamily = name + ', Jets';
     }; /* Control changing of fonts in drop list  */
     TCNDDF.handleFontChange = function(evt) {
         var clickTarget = evt.target || window.event.srcElement;
@@ -115,8 +113,9 @@ reader.addEventListener("loadend", TCNDDF.buildFontListItem, false);
     TCNDDF.updateActiveFont = function(target) {
         var getFontFamily = target.title,
             dropListItem = dropListing.getElementsByTagName("li");
-// DERP
-        displayContainer.style.fontFamily = getFontFamily + ', Jets';
+        if ("fontDropCallback" in window) {
+            window.fontDropCallback(target);
+        }
         for (var i = 0, len = dropListItem.length; i < len; i++) {
             dropListItem[i].className = "";
         }
