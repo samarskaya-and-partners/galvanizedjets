@@ -1,0 +1,20 @@
+{
+  "name": "galvanised_jets",
+  "version": "1.0.0",
+  "description": "Fix problems quickly with Galvanised Jets!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && browserify -s galvanised_jets js/index.js -o app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.3.32"
+  }
+}
