@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && browserify -s galvanised_jets js/index.js -o app.js"
+    "build": "tsc && browserify -s galvanised_jets -g uglifyify js/index.js -o app.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "typescript": "^3.0.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.3.32"
+    "@types/jquery": "^3.3.32",
+    "uglifyify": "^5.0.2"
   }
 }
