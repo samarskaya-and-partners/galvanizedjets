@@ -11,10 +11,28 @@ var alphabets = {
   "greek": "αβγδεζηθικλμνξοπρσςτυφχψω"
 };
 
-var hobonops =  {
+var hobonops = {
   "latin": "nn*nono*oo",
+  "latin_middle_punctuation": "n!nn*!*no!o",
+  "latin_wrap_punctuation": "[*nn] [nnoo] [oo*]",
   "cyrillic": "нн*ноно*оо",
   "greek": "ηη*ηοηο*οο"
+}
+
+var punctuationlist = {
+  "middle": `‐‑‒–—―~_.‥…,‚„'"‘’‛“”‟:;‹«›»/\\•*⁎⁑⁂❧☞◊†‡※&@`,
+  "end": '™℠ªº©®¶',
+  "start": '‥#§℅',
+  "wrap_pairs": [
+            ['¿','?'],['¡','!'],
+            ['‘','’'],['“','”'],
+            ['’','‘'],['”','“'],
+            ['‹','›'],['«','»'],
+            ['›','‹'],['»','«'],
+            ['‚','‚'],['„','„'],
+            ['(',')'],['[',']'],['{','}'],
+        ],
+  "dashes": '--'
 }
 
 interface callbackType { (wordlist: [string]): void }
@@ -119,11 +137,46 @@ var numeric = function () {
   wordDiv.append($(numeric_html));
 }
 
+/* The punctuation function is a nightmare. Here we go. */
+var punctuation = function () {
+  var script :string = $("#charsets").data("script");
+  var alphabet :string = alphabets[script+"_extended"] || alphabets[script];
+  var wordDiv = $("#words");
+  wordDiv.empty();
+  setSingleLine();
+
+  var addDivider = (x) => $("#words").append($("<h2><span>"+x+"</span></h2>"))
+
+  addDivider("Mid Punctuation")
+  var list = $("<ul></ul>");
+  var pattern : string = hobonops[script+"_middle_punctuation"]
+  for (var p of punctuationlist.middle) {
+    for (var x of alphabet) {
+      var li = $("<li></li>").append(pattern.replace(/\*/g, x).replace(/\!/g, p))
+      list.append(li)
+    }
+  }
+  wordDiv.append(list);
+
+  addDivider("Wrap Punctuation")
+  var list2 = $("<ul></ul>");
+  var wrappattern = hobonops[script+"_wrap_punctuation"]
+  for (var [l,r] of punctuationlist.wrap_pairs) {
+    for (var x of alphabet) {
+      var li = $("<li></li>").append(wrappattern.replace(/\*/g, x).replace(/\[/g, l).replace(/\]/g, r))
+      list2.append(li)
+    }
+  }
+  wordDiv.append(list2);
+
+}
+
 export function setupFunctions () {
   /* Set up the different kerning test buttons to fire their functionality */
   $("#simple input").click(simple);
   $("#hobonop input").click(hobonop);
   $("#numeric input").click(numeric);
+  $("#punctuation input").click(punctuation);
 
   /* When we change script, we want to re-fire the currently selected
      kerning test. */
