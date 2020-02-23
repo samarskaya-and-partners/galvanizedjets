@@ -1,0 +1,29 @@
+on:
+  push:
+    paths-ignore:
+    - 'app.js'
+jobs:
+  build:
+    name: Rebuild app.js
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+      - uses: actions/checkout@v2
+      - name: Set up node.js
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Rebuild
+      - run: npm install
+      - run: npm run-script build
+      - name: Check in
+      - run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add app.js
+        git commit -m "Rebuild app"
+      - name: Push
+      - uses: ad-m/github-push-action@master
+      - with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
