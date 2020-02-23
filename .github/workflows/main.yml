@@ -1,7 +1,7 @@
 on:
   push:
-    paths-ignore:
-    - 'app.js'
+    paths:
+    - 'src/*.ts'
 jobs:
   build:
     name: Rebuild app.js
