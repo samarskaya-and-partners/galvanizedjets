@@ -19,7 +19,7 @@ function makeSliders(axes) {
     var sliderdiv = $('<div class="axisslider"/>');
     var label = $(`<label for="axis_${axis.tag}"/>`).text(axis.name.en);
     sliderdiv.append(label);
-    var input = $(`<input type="range" id="axis_${axis.tag}" min="${axis.minvalue}" max="${axis.maxValue}" value="${axis.defaultValue}"/>`)
+    var input = $(`<input type="range" id="axis_${axis.tag}" min="${axis.minValue}" max="${axis.maxValue}" value="${axis.defaultValue}"/>`)
     sliderdiv.append(input);
     $("#varfont_axes").append(sliderdiv);
   }
