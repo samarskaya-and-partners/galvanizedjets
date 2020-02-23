@@ -41,10 +41,16 @@ export function lazyLoadWordlist(language:string, cb: callbackType) {
    attribute, replace it with another random word containing the
    same pair */
 var cycle = function () {
+  var isSentence = $("#words").hasClass("sentence_case");
   var key = $(this).data("key");
   var script = $("#charsets").data("script");
   var wordlist = wordlists[script];
-  var words = wordlist.filter( (x) => x.match(key) )
+  var words;
+  if (isSentence) {
+    words = wordlist.filter ( (x) => x.startsWith(key) )
+  } else {
+    words = wordlist.filter ( (x) => x.includes(key) )
+  }
   var randomWord = words[Math.floor(Math.random() * words.length)]
   $(this).text(randomWord);
 }
@@ -55,6 +61,7 @@ var simple = function(evt) {
   var script = $("#charsets").data("script");
   var alphabet = alphabets[script];
   var wordDiv = $("#words");
+  var isSentence = wordDiv.hasClass("sentence_case");
 
   lazyLoadWordlist(script, (wordlist) => {
     wordDiv.empty();
@@ -63,7 +70,12 @@ var simple = function(evt) {
     $("#loader").show( () => {
       for (var l of alphabet) {
         for (var r of alphabet) {
-          var firstWord = wordlist.find ( (x) => x.includes(l+r) )
+          var firstWord;
+          if (isSentence) {
+            firstWord = wordlist.find ( (x) => x.startsWith(l+r) )
+          } else {
+            firstWord = wordlist.find ( (x) => x.includes(l+r) && !x.startsWith(l+r) )
+          }
           if (!firstWord) continue;
           var li = $("<li></li>").append(firstWord);
           li.data("key", l+r);
@@ -155,5 +167,14 @@ export function setupFunctions () {
      kerning test. */
   $("#btn_latin input,#btn_cyrillic input,#btn_greek input").click(function () {
     $("#kerning_proofs .selected input").click();
+  })
+
+  /* If we are doing the wordlists function and we change case, force
+  a reload because we might be going to sentence-case which pulls its
+  wordlist from the front not from the middle. */
+  $("#uppercase_pie, #lowercase_pie, #sentence_pie").click(function() {
+    if ($("#simple").hasClass("selected")) {
+      $("#simple input").click();
+    }
   })
 }
