@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-
+import { setupAxisSliders } from './varfonts';
 /* Mainly UI things - what needs to happen in response to clicks.
    The philosophy is that application state is found in the DOM, not in
    a state variable; i.e. we are doing a hobonop because #honobop has the
@@ -87,4 +87,6 @@ export function setupMovingParts () {
     $("#words").css("font-feature-settings", onFeatures)
   })
   $("#opentype").data("featureset", {});
+
+  setupAxisSliders();
 }
