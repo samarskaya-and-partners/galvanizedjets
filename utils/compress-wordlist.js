@@ -40,32 +40,35 @@ if (doShuffle) {
   }
 }
 
+function addMatches(matches, currentLeft, currentRight) {
+  var matchCount = 0;
+  var tickTock = true;
+  while (matches && matchCount < wordOptions && (currentLeft >= 0) && currentRight >= 0) {
+    process.stderr.write("-".repeat(currentLeft)+l+r+"-".repeat(currentRight)+" ");
+    contextualMatches = matches.filter( (x) => x.slice(currentLeft,-currentRight).includes(l+r) ).slice(0,wordOptions)
+    matchCount += contextualMatches.length;
+    if (tickTock) { currentRight-- } else { currentLeft-- }
+    tickTock = !tickTock;
+    for (m of contextualMatches) {
+      marked[m] = true;
+    }
+    process.stderr.write(matchCount+" ");
+  }
+  process.stderr.write("\n");
+
+  /* Fake it */
+  if (matchCount == 0) {
+    marked["-".repeat(desiredLeftContext)+l+r+"-".repeat(desiredRightContext)] = true;
+  }
+}
 
 for (l of alphabet) {
   for (r of alphabet) {
     process.stderr.write(l+r+": ");
-    var matchCount = 0;
     var matches = obj.filter( (x) => x.includes(l+r) );
-    var tickTock = true;
-    var currentLeft = desiredLeftContext;
-    var currentRight = desiredRightContext;
-    while (matches && matchCount < wordOptions && (currentLeft + currentRight) > 0) {
-      process.stderr.write("-".repeat(currentLeft)+l+r+"-".repeat(currentRight)+" ");
-      contextualMatches = matches.filter( (x) => x.slice(currentLeft,-currentRight).includes(l+r) ).slice(0,wordOptions)
-      matchCount += contextualMatches.length;
-      if (tickTock) { currentRight-- } else { currentLeft-- }
-      tickTock = !tickTock;
-      for (m of contextualMatches) {
-        marked[m] = true;
-      }
-      process.stderr.write(matchCount+" ");
-    }
-    process.stderr.write("\n");
-
-    /* Fake it */
-    if (matchCount == 0) {
-      marked["-".repeat(desiredLeftContext)+l+r+"-".repeat(desiredRightContext)] = true;
-    }
+    addMatches(matches, desiredLeftContext, desiredRightContext);
+    addMatches(matches, 0, desiredRightContext); // Lr--- for cap-lower
   }
 }
+
 console.log(JSON.stringify(Object.keys(marked)))
