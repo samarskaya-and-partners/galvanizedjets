@@ -335,13 +335,6 @@
                 
                 <div id="word_options" word-options class="no_print" ng-class="{visible : (nav_hidden && settings.lcase != 'spacing_upper' && settings.lcase != 'spacing_lower') }" >
                     <div id="key"></div>
-                    <div id="lock_options" ng-show="settings.locked">
-                        <div ng-if="word.realz && settings.dict != 'spacing' && settings.charset != 'numeric' && settings.dict != 'numeric'">
-                            <span ng-click="replace_me(word, settings.locked_word_index)">click for a new word</span>
-                            | <span ng-click="report(word)">click to report word</span>
-                        </div>
-                        <span ng-if="!word.realz" ><a href="mailto:galvy@samarskaya.com?subject=Word%20suggestion">click to suggest a word</a></span>
-                    </div>
                 </div>
                 
                 <ul class="social ss-icon no_print">
