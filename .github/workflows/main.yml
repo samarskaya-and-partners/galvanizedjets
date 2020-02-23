@@ -17,3 +17,13 @@ jobs:
         run: |
           npm install
           npm run-script build
+      - name: Check in
+        run: |
+             git config --local user.email "action@github.com"
+             git config --local user.name "GitHub Action"
+             git add app.js
+             git commit -m "Rebuild app"
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
