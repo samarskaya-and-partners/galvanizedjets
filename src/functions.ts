@@ -13,8 +13,11 @@ var alphabets = {
 
 var hobonops = {
   "latin": "nn*nono*oo",
+  "latin_start_punctuation": "!*nonn",
   "latin_middle_punctuation": "n!nn*!*no!o",
   "latin_wrap_punctuation": "[*nn] [nnoo] [oo*]",
+  "latin_end_punctuation": "nnon*!",
+  "latin_dashes_punctuation": "*!*!*!*!",
   "cyrillic": "нн*ноно*оо",
   "greek": "ηη*ηοηο*οο"
 }
@@ -146,18 +149,22 @@ var punctuation = function () {
   setSingleLine();
 
   var addDivider = (x) => $("#words").append($("<h2><span>"+x+"</span></h2>"))
-
-  addDivider("Mid Punctuation")
-  var list = $("<ul></ul>");
-  var pattern : string = hobonops[script+"_middle_punctuation"]
-  for (var p of punctuationlist.middle) {
-    for (var x of alphabet) {
-      var li = $("<li></li>").append(pattern.replace(/\*/g, x).replace(/\!/g, p))
-      list.append(li)
+  var addPunctList = function (which) {
+    var list = $("<ul></ul>");
+    var pattern : string = hobonops[script+"_"+which+"_punctuation"]
+    for (var p of punctuationlist[which]) {
+      for (var x of alphabet) {
+        var li = $("<li></li>").append(pattern.replace(/\*/g, x).replace(/\!/g, p))
+        list.append(li)
+      }
     }
+    wordDiv.append(list);
   }
-  wordDiv.append(list);
 
+  addDivider("Mid Punctuation");
+  addPunctList("middle");
+
+  /* Wrap is special */
   addDivider("Wrap Punctuation")
   var list2 = $("<ul></ul>");
   var wrappattern = hobonops[script+"_wrap_punctuation"]
@@ -168,6 +175,15 @@ var punctuation = function () {
     }
   }
   wordDiv.append(list2);
+
+  addDivider("End Punctuation")
+  addPunctList("end");
+
+  addDivider("Start Punctuation")
+  addPunctList("start");
+
+  addDivider("Dashes")
+  addPunctList("dashes");
 
 }
 
