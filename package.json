@@ -10,13 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/opentype.js": "^0.7.2",
     "browserify": "^16.5.0",
     "jquery": "^3.4.1",
+    "opentype.js": "^0.8.0",
     "ts-node": "^7.0.1",
-    "typescript": "^3.0.1"
+    "typescript": "^3.8.2",
+    "variablefont.js": "git+https://github.com/Monotype/variableFont.js.git"
   },
   "devDependencies": {
-    "@types/jquery": "^3.3.32",
+    "@types/jquery": "^3.3.33",
     "uglifyify": "^5.0.2"
   }
 }
