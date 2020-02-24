@@ -6,7 +6,7 @@ import * as $ from "jquery";
 $( () => {
   setupMovingParts();
   setupFunctions();
-  lazyLoadWordlist("latin", () => {
+  lazyLoadWordlist("en", () => {
     /* Start defaults */
     $("#btn_latin").click()
     $("#uppercase_pie").click()

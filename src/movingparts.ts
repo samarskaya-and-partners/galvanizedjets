@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 import { setupAxisSliders } from './varfonts';
+import { languageNames, defaultLangPerScript } from './alphabets';
 /* Mainly UI things - what needs to happen in response to clicks.
    The philosophy is that application state is found in the DOM, not in
    a state variable; i.e. we are doing a hobonop because #honobop has the
@@ -40,7 +41,21 @@ export function setupMovingParts () {
     $("#charsets").data("script", script);  /* "btn_..." */
     $(".chars").hide()
     $(".chars."+script).show()
+    /* Set up languages in select input */
+    $("#language").empty()
+    var langs = languageNames[script];
+    var keys = Object.keys(langs).sort( (a,b) => langs[a].localeCompare(langs[b]) );
+
+    for (let key of keys) {
+      var opt = $("<option>").attr("value", key).text(langs[key])
+      if (key == defaultLangPerScript[script]) {
+        opt.attr("selected", "selected")
+      }
+      $("#language").append(opt)
+    }
   })
+
+  $("#language").hide()
 
   /* Cases toggles */
   $("#uppercase_pie").click( function () { /* upper */
@@ -66,9 +81,14 @@ export function setupMovingParts () {
   })
 
   /* Function toggles - just the UI; the functionality is provided in functions.ts */
-  $("#hobonop,#simple,#extended,#punctuation,#numeric").click( function (evt) {
+  $("#hobonop,#simple,#punctuation,#numeric").click( function (evt) {
     $("#kerning_proofs label").removeClass("selected");
     $(this).addClass("selected");
+    if (this.id != "simple") {
+      $("#language").hide()
+    } else {
+      $("#language").show()
+    }
   })
 
   /* OpenType Feature toggles. */

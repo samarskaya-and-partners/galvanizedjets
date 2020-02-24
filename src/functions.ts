@@ -1,16 +1,8 @@
 import * as $ from "jquery";
 import { numeric_html } from "./numeric";
 import { formHobonop } from "./hobonop";
-
+import { alphabets } from "./alphabets";
 var wordlists = {};
-
-var alphabets = {
-  "latin": "abcdefghijklmnopqrstuvwxyz",
-  "latin_extended": 'abcdefghijklmnopqrstuvwxyzàáăâäāąåǻãæćčçĉċďđðèéĕěêëėēęğĝġħĥìíĭîïi̇įĩĵķłĺľļńňņñòóŏôõöőōøœŕřŗśšşŝșťțþùúŭûüűūųůũẃŵẅẁýŷÿỳźžż',
-  "cyrillic": "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
-  "cyrillic_extended": "абвгдеёжзийклмнопрстуфхцчшщъыьэюяґђѓєѕіїјљњћќўџ",
-  "greek": "αβγδεζηθικλμνξοπρσςτυφχψω"
-};
 
 interface callbackType { (wordlist: [string]): void }
 
@@ -59,11 +51,11 @@ var cycle = function () {
    words representing all pairs in the alphabet. */
 var simple = function(evt) {
   var script = $("#charsets").data("script");
-  var alphabet = alphabets[script];
   var wordDiv = $("#words");
   var isSentence = wordDiv.hasClass("sentence_case");
-
-  lazyLoadWordlist(script, (wordlist) => {
+  var language = $("#language").val() as string;
+  var alphabet = alphabets[language] || alphabets[script];
+  lazyLoadWordlist(language, (wordlist) => {
     wordDiv.empty();
     var ul = $("<ul>");
     wordDiv.append(ul);
@@ -177,4 +169,6 @@ export function setupFunctions () {
       $("#simple input").click();
     }
   })
+
+  $("#language").change(simple);
 }
