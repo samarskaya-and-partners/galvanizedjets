@@ -35,8 +35,8 @@ export function lazyLoadWordlist(language:string, cb: callbackType) {
 var cycle = function () {
   var isSentence = $("#words").hasClass("sentence_case");
   var key = $(this).data("key");
-  var script = $("#charsets").data("script");
-  var wordlist = wordlists[script];
+  var language = $("#language").val() as string;
+  var wordlist = wordlists[language];
   var words;
   if (isSentence) {
     words = wordlist.filter ( (x) => x.startsWith(key) )
