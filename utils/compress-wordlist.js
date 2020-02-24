@@ -78,11 +78,13 @@ if (doShuffle) {
   }
 }
 
-function addMatches(matches, currentLeft, currentRight) {
+function addMatches(matches, leftContext, rightContext, l, r) {
   var matchCount = 0;
   var tickTock = true;
+  var currentLeft = leftContext;
+  var currentRight = rightContext;
   while (matches && matchCount < wordOptions && (currentLeft >= 0) && currentRight >= 0) {
-    process.stderr.write("-".repeat(currentLeft)+l+r+"-".repeat(currentRight)+" ");
+    // process.stderr.write("-".repeat(currentLeft)+l+r+"-".repeat(currentRight)+" ");
     contextualMatches = matches.filter( (x) => x.slice(currentLeft,-currentRight).includes(l+r) ).slice(0,wordOptions)
     matchCount += contextualMatches.length;
     if (tickTock) { currentRight-- } else { currentLeft-- }
@@ -90,22 +92,24 @@ function addMatches(matches, currentLeft, currentRight) {
     for (m of contextualMatches) {
       marked[m] = true;
     }
-    process.stderr.write(matchCount+" ");
+    // process.stderr.write(matchCount+" ");
   }
-  process.stderr.write("\n");
+  // process.stderr.write("\n");
 
   /* Fake it */
   if (addDummies && matchCount == 0) {
-    marked["-".repeat(desiredLeftContext)+l+r+"-".repeat(desiredRightContext)] = true;
+    marked["-".repeat(leftContext)+l+r+"-".repeat(rightContext)] = true;
   }
 }
 
 for (l of alphabet) {
+  process.stderr.write(l)
   for (r of alphabet) {
-    process.stderr.write(l+r+": ");
+    // process.stderr.write(l+r+": ");
     var matches = obj.filter( (x) => x.includes(l+r) );
-    addMatches(matches, desiredLeftContext, desiredRightContext);
-    addMatches(matches, 0, desiredRightContext); // Lr--- for cap-lower
+    addMatches(matches, desiredLeftContext, desiredRightContext, l, r);
+    matches = obj.filter( (x) => x.startsWith(l+r) );
+    addMatches(matches, 0, desiredRightContext, l, r); // Lr--- for cap-lower
   }
 }
 
