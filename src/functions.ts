@@ -76,7 +76,7 @@ var simple = function (evt) {
             );
           }
           if (!firstWord) continue;
-          var li = $("<li></li>").append(firstWord);
+          var li = $("<li></li>").append(firstWord + " ");
           li.data("key", l + r);
           li.mouseenter(function () {
             $("#key").text("<" + $(this).data("key") + ">");
