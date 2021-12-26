@@ -223,7 +223,7 @@ path.pie_slice.selected {
 
 #display_options {
     position: absolute;
-    bottom: 1vw;
+    bottom: -1.25vw;
     left: 28.5vw;
 }
 
