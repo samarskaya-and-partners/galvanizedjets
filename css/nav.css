@@ -228,7 +228,8 @@ path.pie_slice.selected {
 }
 
 #display_options label {
-    display: inline-block;
+    display: block;
+    margin: auto;
 }
 #display_options label#font_size {
     width: 40vw;
@@ -249,17 +250,40 @@ input[type="range"] {
 }
 
 #font_size svg,
-#time svg {
-    height: 1.25vw;
-    width: auto;
-    display: inline-block;
+#time {
+    height: 50px;
+    width: 50px;
+    display: block;
     vertical-align: middle;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/images/lights_out.svg);
 }
-#time .day {
-    fill: rgba(255, 255, 255, 0);
+#time.day {
+    background-image: url(/images/lights_on.svg);
 }
-#time.day .day {
-    fill: rgba(255, 255, 255, 1);
+#line-buttons {
+    height: 50px;
+    width: 50px;
+}
+#line-buttons-multi {
+    height: 50px;
+    width: 50px;
+    display: block;
+    vertical-align: middle;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/images/paragraph_on.svg);
+}
+
+#line-buttons-single {
+    height: 50px;
+    width: 50px;
+    display: block;
+    vertical-align: middle;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/images/paragraph_off.svg);
 }
 
 .tray {
