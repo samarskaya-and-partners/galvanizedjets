@@ -141,7 +141,7 @@ button:focus {
 }
 
 #btn_cyrillic {
-    top: 8vw;
+    top: 7vw;
     right: 0px;
     z-index: 2;
     width: 13vw;
@@ -223,7 +223,7 @@ path.pie_slice.selected {
 
 #display_options {
     position: absolute;
-    bottom: -1.25vw;
+    bottom: -0.5vw;
     left: 28.5vw;
 }
 
