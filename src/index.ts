@@ -18,6 +18,7 @@ $(() => {
 window["fontDropCallback"] = function (newFont) {
   var css = `"${newFont.title}", Jets, "Adobe NotDef"`;
   $("#fontdrop_view").css("font-family", css);
+  $("#fontdrop_view").removeClass("background");
 
   handleNewVariableFont();
 };
